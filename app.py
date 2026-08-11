@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 def init_db():
     conn = sqlite3.connect('data.db')
-    conn.execute('CREATE TABLE IF NOT EXISTS users (name TEXT, email TEXT)')
+    conn.execute('CREATE TABLE IF NOT EXISTS users (name TEXT, email TEXT, mobile NUM)')
     conn.close()
 
 @app.route('/', methods=['GET', 'POST'])
@@ -13,9 +13,10 @@ def index():
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
+        mobile = request.form['mobile']
 
         conn = sqlite3.connect('data.db')
-        conn.execute('INSERT INTO users (name, email) VALUES (?, ?)', (name, email))
+        conn.execute('INSERT INTO users (name, email, mobile) VALUES (?, ?, ?)', (name, email, mobile))
         conn.commit()
         conn.close()
 
